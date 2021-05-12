@@ -64,28 +64,79 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<a href="#etomon-search-client" id="etomon-search-client" style="color: inherit; text-decoration: none;">
-					<h1>Etomon Search Client</h1>
+				<a href="#io-redis-down" id="io-redis-down" style="color: inherit; text-decoration: none;">
+					<h1>IO Redis Down</h1>
 				</a>
-				<p>The project provides a portable library for searching for Courses in our backend. </p>
-				<p>Examples of using this library include: displaying search results based on a keyword, listing courses as a dropdown, or for rendering courses as a list in the admin panel.</p>
-				<a href="#structure" id="structure" style="color: inherit; text-decoration: none;">
-					<h2>Structure</h2>
+				<p>This repository is a very simple implementation of <a href="https://github.com/Level/abstract-leveldown"><code>abstract-leveldown</code></a> using <a href="https://github.com/luin/ioredis"><code>ioredis</code></a> (redis) as the data store.</p>
+				<p>I couldn&#39;t get <a href="https://github.com/hmalphettes/redisdown"><code>redis-down</code></a> to function properly and figured the <a href="https://github.com/Level/abstract-leveldown"><code>abstract-leveldown</code></a> API was simple enough to re-implement.</p>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
 				</a>
-				<a href="#etomonsearchclient" id="etomonsearchclient" style="color: inherit; text-decoration: none;">
-					<h3>EtomonSearchClient</h3>
+				<pre><code>  <span class="hljs-keyword">const</span> { IORedisDown } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;@etomon/ioredisdown&#x27;</span>);
+  <span class="hljs-keyword">const</span> Redis = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;ioredis&#x27;</span>);
+  <span class="hljs-keyword">const</span> levelup = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;levelup&#x27;</span>);
+  
+  <span class="hljs-comment">//  A connection string</span>
+  <span class="hljs-keyword">let</span> db = levelup(<span class="hljs-keyword">new</span> IORedisDown(<span class="hljs-string">&#x27;blah&#x27;</span>), <span class="hljs-string">&#x27;redis://localhost:6379&#x27;</span>);
+  
+  <span class="hljs-comment">// As an object containing settings</span>
+  db = levelup(<span class="hljs-keyword">new</span> IORedisDown(<span class="hljs-string">&#x27;blah&#x27;</span>), {
+    <span class="hljs-attr">host</span>: <span class="hljs-string">&#x27;127.0.0.1&#x27;</span>,
+    <span class="hljs-attr">port</span>: <span class="hljs-number">6379</span>
+  });
+  
+  <span class="hljs-comment">// Pass your own redis</span>
+  <span class="hljs-keyword">const</span> redis = <span class="hljs-keyword">new</span> Redis(<span class="hljs-number">6379</span>, <span class="hljs-string">&#x27;127.0.0.1&#x27;</span>);
+  
+  db = levelup(<span class="hljs-keyword">new</span> IORedisDown(<span class="hljs-string">&#x27;blah&#x27;</span>), {
+    <span class="hljs-attr">redis</span>: redis
+  });
+</code></pre>
+				<a href="#options" id="options" style="color: inherit; text-decoration: none;">
+					<h2>Options</h2>
 				</a>
-				<p><code>API/EtomonSearchClient</code> provides methods for performing searches on our backend via WebSocket. It is a drop-in replacement for the old <code>public/search.js</code> library and is 100% compatible with the old functionality.</p>
-				<p>This API client can be used both on the server-side and client-side.</p>
-				<a href="#googlelocationautocomplete" id="googlelocationautocomplete" style="color: inherit; text-decoration: none;">
-					<h3>GoogleLocationAutocomplete</h3>
+				<p>The options (second) parameter in <code>levelup</code> gets passed directly to the constructor of IORedis.</p>
+				<p>If an array is passed it will spread the array elements across the constructor.</p>
+				<p>So <code>db = levelup(new IORedisDown(&#39;blah&#39;), [ 6379, &#39;127.0.0.1&#39; ])</code></p>
+				<p>and </p>
+				<pre><code><span class="hljs-attribute">  const redis</span> = new Redis(6379, <span class="hljs-string">&#x27;127.0.0.1&#x27;</span>);
+  
+<span class="hljs-attribute">  db</span> = levelup(new IORedisDown(<span class="hljs-string">&#x27;blah&#x27;</span>), {
+    redis: redis
+  });
+</code></pre>
+				<p>Are equivalent</p>
+				<a href="#encoding" id="encoding" style="color: inherit; text-decoration: none;">
+					<h2>Encoding</h2>
 				</a>
+				<p>I didn&#39;t have time to figure out how <code>encoding-down</code> works so encoding/decoding is currently handled by [`@etomon/encode-tools](<a href="https://github.com/EtomonUSA/encode-tools">https://github.com/EtomonUSA/encode-tools</a>).</p>
+				<p>Crucially, data will be serialized as <a href="https://npmjs.org/@msgpack/msgpack"><code>msgpack</code></a> by default. Keys will be serialized as JSON, then hashed using <a href="https://npmjs.org/xxhash-addon">xxhash3</a>.</p>
+				<p>The second argument of the <code>IORedisDown</code> constructor can be used to configure the <code>EncodeTools</code> instance.</p>
+				<p>At present, the hashing algorithm must be <code>xxhash3</code>.</p>
+				<p>By default, these are the settings </p>
+				<pre><code>const DEFAULT_ENCODING_OPTIONS: EncodingOptions = {
+  <span class="hljs-comment">// If Buffers need to be encoded as string they will be encoded as base64</span>
+  binaryEncoding: <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">BinaryEncoding</span>.</span></span>base64,
+  <span class="hljs-comment">// * This is ignored, must be xxhash3 *</span>
+  hashAlgorithm: <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">HashAlgorithm</span>.</span></span>xxhash3,
+  <span class="hljs-comment">// By default will store data as msgpack</span>
+  serializationFormat: <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">SerializationFormat</span>.</span></span>msgpack,
+  <span class="hljs-comment">// Not used</span>
+  uniqueIdFormat: <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">IDFormat</span>.</span></span>uuidv4String
+}
+</code></pre>
 				<a href="#building" id="building" style="color: inherit; text-decoration: none;">
 					<h2>Building</h2>
 				</a>
-				<p>Etomon Search is written in TypeScript. The UI Component is built on React, and so is written in TSX (like JSX but TypeScript). </p>
-				<p>The API client depends on <code>socket.io</code>.</p>
-				<p>To build run <code>npm build</code>.</p>
+				<p><code>@etomon/ioredisdown</code> is written in TypeScript, to build run <code>npm run build</code>.</p>
+				<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
+					<h2>Documentation</h2>
+				</a>
+				<p>Documentation can be found here</p>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h2>License</h2>
+				</a>
+				<p>Etomon IORedisDown is licensed under the GNU LGPL-3.0, a copy of which can be found at <a href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>.</p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -114,6 +165,7 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
 				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
