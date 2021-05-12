@@ -77,7 +77,7 @@ const DEFAULT_ENCODING_OPTIONS: EncodingOptions = {
 
 ## Documentation
 
-Documentation can be found here
+Documentation can be [found here](https://etomonusa.github.io/ioredisdown).
 
 ## License
 
