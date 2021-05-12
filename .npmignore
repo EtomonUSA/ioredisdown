@@ -1,0 +1,8 @@
+.tscache
+.DS_STORE
+.vscode
+.idea
+src
+tscommand*
+node_modules
+.env

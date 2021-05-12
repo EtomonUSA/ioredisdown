@@ -1,0 +1,1 @@
+export { IORedisDown } from './IORedisDown';

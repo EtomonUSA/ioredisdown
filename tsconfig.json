@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "declaration": true,
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "allowJs": true,
+    "sourceMap": true,
+    "target": "es2018",
+    "rootDir": "src",
+    "outDir": "lib",
+    "lib": [ "es2017", "DOM" ]
+  },
+  "files": [ "src/index.ts", "src/IORedisDown.ts" ]
+}
