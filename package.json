@@ -1,62 +1,62 @@
 {
-  "name": "@etomon/ioredisdown",
-  "version": "1.0.0",
-  "description": "Redis backend for level which uses ioredis as the redis client",
-  "main": "lib/index.js",
-  "contributors": [
-    {
-      "name": "Zachary R.T. Boyd",
-      "email": "zachary@zacharyboyd.nyc",
-      "url": "https://zacharyboyd.nyc"
+    "name": "@etomon/ioredisdown",
+    "version": "1.0.1",
+    "description": "Redis backend for level which uses ioredis as the redis client",
+    "main": "lib/index.js",
+    "contributors": [
+        {
+            "name": "Zachary R.T. Boyd",
+            "email": "zachary@zacharyboyd.nyc",
+            "url": "https://zacharyboyd.nyc"
+        },
+        {
+            "name": "Etomon Team",
+            "email": "open-source@etomon.com",
+            "url": "https://etomon.com"
+        }
+    ],
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org",
+        "access": "public"
     },
-    {
-      "name": "Etomon Team",
-      "email": "open-source@etomon.com",
-      "url": "https://etomon.com"
-    }
-  ],
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org",
-    "access": "public"
-  },
-  "scripts": {
-    "build": "grunt",
-    "prepare": "grunt",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "devDependencies": {
-    "@types/abstract-leveldown": "^5.0.1",
-    "@types/bluebird": "^3.5.34",
-    "@types/bluebird-global": "^3.5.12",
-    "@types/ioredis": "^4.26.3",
-    "@types/levelup": "^4.3.1",
-    "docdash": "^1.2.0",
-    "grunt": "^1.2.1",
-    "grunt-contrib-clean": "^2.0.0",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-jsdoc": "^2.4.1",
-    "grunt-ts": "^6.0.0-beta.22",
-    "grunt-typedoc": "^0.2.4",
-    "typedoc": "^0.18.0",
-    "typescript": "^3.9.7"
-  },
-  "homepage": "https://github.com/EtomonUSA/ioredisdown",
-  "bugs": "https://github.com/EtomonUSA/ioredisdown",
-  "repository": {
-    "url": "https://github.com/EtomonUSA/ioredisdown",
-    "type": "git"
-  },
-  "license": "LGPL-3.0",
-  "dependencies": {
-    "@etomon/encode-tools": "^1.1.1",
-    "abstract-leveldown": "^7.0.0",
-    "bluebird": "^3.7.2",
-    "bson-ext": "^2.0.5",
-    "ioredis": "^4.27.2",
-    "xxhash-addon": "^1.4.0"
-  },
-  "files": [
-    "/lib",
-    "LICENSE.txt"
-  ]
+    "scripts": {
+        "build": "grunt",
+        "prepare": "grunt",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "devDependencies": {
+        "@types/abstract-leveldown": "^5.0.1",
+        "@types/bluebird": "^3.5.34",
+        "@types/bluebird-global": "^3.5.12",
+        "@types/ioredis": "^4.26.3",
+        "@types/levelup": "^4.3.1",
+        "docdash": "^1.2.0",
+        "grunt": "^1.2.1",
+        "grunt-contrib-clean": "^2.0.0",
+        "grunt-contrib-copy": "^1.0.0",
+        "grunt-jsdoc": "^2.4.1",
+        "grunt-ts": "^6.0.0-beta.22",
+        "grunt-typedoc": "^0.2.4",
+        "typedoc": "^0.18.0",
+        "typescript": "^3.9.7"
+    },
+    "homepage": "https://github.com/EtomonUSA/ioredisdown",
+    "bugs": "https://github.com/EtomonUSA/ioredisdown",
+    "repository": {
+        "url": "https://github.com/EtomonUSA/ioredisdown",
+        "type": "git"
+    },
+    "license": "LGPL-3.0",
+    "dependencies": {
+        "@etomon/encode-tools": "^1.1.1",
+        "abstract-leveldown": "^7.0.0",
+        "bluebird": "^3.7.2",
+        "bson-ext": "^2.0.5",
+        "ioredis": "^4.27.2",
+        "xxhash-addon": "^1.4.0"
+    },
+    "files": [
+        "/lib",
+        "LICENSE.txt"
+    ]
 }
