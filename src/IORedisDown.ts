@@ -28,7 +28,7 @@ export class IORedisDown<K,V> extends AbstractLevelDOWN<K,V>{
   }
 
   protected async _openAsync(options: RedisOptions): Promise<void> {
-    if ((typeof (options) === 'object') && typeof((options as ExistingRedis).redis) === 'function') {
+    if ((typeof (options) === 'object') && typeof((options as ExistingRedis).redis) !== 'undefined') {
       this.db = (options as ExistingRedis).redis;
     } else {
       this.db = new IORedis(
@@ -52,7 +52,7 @@ export class IORedisDown<K,V> extends AbstractLevelDOWN<K,V>{
     let { XXHash3 } = EncodeToolsNative.xxhashNative();
     let hasher = new XXHash3(this.hashSeed);
 
-    let buf = hasher.hash(this.enc.serializeObject<K>(key, SerializationFormat.json));
+    let buf = hasher.hash(Buffer.isBuffer(key) ? key : this.enc.serializeObject<K>(key, SerializationFormat.json));
     return this.enc.encodeBuffer(buf).toString('utf8');
   }
 
