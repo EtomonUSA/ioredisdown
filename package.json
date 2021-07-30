@@ -1,6 +1,6 @@
 {
     "name": "@etomon/ioredisdown",
-    "version": "1.2.0",
+    "version": "1.2.2",
     "description": "Redis backend for level which uses ioredis as the redis client",
     "main": "lib/index.js",
     "contributors": [
@@ -28,7 +28,7 @@
         "@types/abstract-leveldown": "^5.0.1",
         "@types/bluebird": "^3.5.34",
         "@types/bluebird-global": "^3.5.12",
-        "@types/ioredis": "^4.26.3",
+        "@types/ioredis": "^4.26.6",
         "@types/levelup": "^4.3.1",
         "docdash": "^1.2.0",
         "grunt": "^1.2.1",
@@ -51,7 +51,8 @@
         "@etomon/encode-tools": "^2.3.2",
         "abstract-leveldown": "^7.0.0",
         "bluebird": "^3.7.2",
-        "ioredis": "^4.27.2"
+        "ioredis": "^4.27.2",
+        "xxhashjs": "^0.2.2"
     },
     "files": [
         "/lib",

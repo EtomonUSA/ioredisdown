@@ -22,12 +22,14 @@ export class IORedisDown<K,V> extends AbstractLevelDOWN<K,V>{
   public db: Redis;
   protected hashSeed = 0;
   protected enc: EncodeToolsNative;
-  constructor(location: string, encodingOptions = DEFAULT_ENCODING_OPTIONS) {
+  constructor(location: string, encodingOptions = DEFAULT_ENCODING_OPTIONS, protected redisOptions?: RedisOptions) {
     super(location);
     this.enc = new EncodeToolsNative(encodingOptions);
   }
 
   protected async _openAsync(options: RedisOptions): Promise<void> {
+    if (this.redisOptions)
+      options = this.redisOptions;
     if ((typeof (options) === 'object') && typeof((options as ExistingRedis).redis) !== 'undefined') {
       this.db = (options as ExistingRedis).redis;
     } else {
@@ -49,11 +51,10 @@ export class IORedisDown<K,V> extends AbstractLevelDOWN<K,V>{
   }
 
   public _serializeKey(key: K): string {
-    let { XXHash3 } = EncodeToolsNative.xxhashNative();
-    let hasher = new XXHash3(this.hashSeed);
+    let { h64 } = require('xxhashjs');
+    let buf = h64(Buffer.isBuffer(key) ? key : this.enc.serializeObject<K>(key, SerializationFormat.json), this.hashSeed);
 
-    let buf = hasher.hash(Buffer.isBuffer(key) ? key : this.enc.serializeObject<K>(key, SerializationFormat.json));
-    return this.enc.encodeBuffer(buf).toString('utf8');
+    return buf.toString(16);
   }
 
   protected async _putAsync(key: string, value: V, options: unknown): Promise<void> {
