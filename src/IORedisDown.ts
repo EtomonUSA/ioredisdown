@@ -1,9 +1,9 @@
 import {AbstractLevelDOWN} from 'abstract-leveldown';
 import * as IORedis from "ioredis";
 import {Redis, RedisOptions as RedisOptionsObject} from "ioredis";
-import {EncodeToolsNative} from '@etomon/encode-tools';
-import {BinaryEncoding, HashAlgorithm, IDFormat, SerializationFormat} from "@etomon/encode-tools/lib/EncodeTools";
-import {EncodingOptions} from "@etomon/encode-tools/lib/EncodeToolsNative";
+import {EncodeToolsAuto as EncodeToolsNative} from '@etomon/encode-tools';
+import {BinaryEncoding, HashAlgorithm, IDFormat, SerializationFormat} from "@etomon/encode-tools/lib/EncodeToolsAuto";
+import {EncodingOptions} from "@etomon/encode-tools/lib/EncodeToolsAuto";
 
 type ExistingRedis = { redis: Redis };
 type Callback<T> = (error: Error|null, result?: T)=>void
@@ -12,8 +12,8 @@ type RedisOptions = { redis: ExistingRedis }|undefined|number|string|RedisOption
 
 const DEFAULT_ENCODING_OPTIONS: EncodingOptions = {
   binaryEncoding: BinaryEncoding.base64,
-  hashAlgorithm: HashAlgorithm.xxhash3,
-  serializationFormat: SerializationFormat.msgpack,
+  hashAlgorithm: HashAlgorithm.xxhash64,
+  serializationFormat: SerializationFormat.cbor,
   uniqueIdFormat: IDFormat.uuidv4String
 };
 

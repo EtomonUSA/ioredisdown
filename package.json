@@ -1,6 +1,6 @@
 {
     "name": "@etomon/ioredisdown",
-    "version": "1.0.1",
+    "version": "1.2.0",
     "description": "Redis backend for level which uses ioredis as the redis client",
     "main": "lib/index.js",
     "contributors": [
@@ -48,12 +48,10 @@
     },
     "license": "LGPL-3.0",
     "dependencies": {
-        "@etomon/encode-tools": "^1.1.1",
+        "@etomon/encode-tools": "^2.3.2",
         "abstract-leveldown": "^7.0.0",
         "bluebird": "^3.7.2",
-        "bson-ext": "^2.0.5",
-        "ioredis": "^4.27.2",
-        "xxhash-addon": "^1.4.0"
+        "ioredis": "^4.27.2"
     },
     "files": [
         "/lib",
